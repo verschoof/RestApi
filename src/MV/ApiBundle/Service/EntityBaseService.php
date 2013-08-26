@@ -72,19 +72,4 @@ abstract class EntityBaseService
     {
         return $this->repo;
     }
-
-    public function create( $entity )
-    {
-        $this->em->persist( $entity );
-    }
-
-    public function update( $entity )
-    {
-        $this->em->persist( $entity );
-    }
-
-    public function remove( $entity )
-    {
-        $this->em->remove( $entity );
-    }
 }
