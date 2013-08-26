@@ -1,0 +1,52 @@
+api_user_all:
+    pattern:  /users
+    defaults: { _controller: MVApiBundle:User:all, _format: ~ }
+    requirements:
+        _method: GET
+
+api_user_get:
+    pattern:  /user/{id}
+    defaults: { _controller: MVApiBundle:User:get, _format: ~ }
+    requirements:
+        _method: GET
+        id: "\d+"
+
+api_user_new:
+    pattern:  /user/new
+    defaults: { _controller: MVApiBundle:User:new, _format: ~ }
+    requirements:
+        _method: POST
+
+api_user_edit:
+    pattern:  /user/{id}
+    defaults: { _controller: MVApiBundle:User:edit, _format: ~ }
+    requirements:
+        _method: PUT
+
+api_user_delete:
+    pattern:  /user/{id}
+    defaults: { _controller: MVApiBundle:User:remove, _format: ~ }
+    requirements:
+        _method: DELETE
+        id: "\d+"
+
+api_user_get_friends:
+    pattern:  /user/{id}/friends
+    defaults: { _controller: MVApiBundle:User:getFriends, _format: ~ }
+    requirements:
+        _method: GET
+        id: "\d+"
+
+acme_demo_user_link:
+    pattern:  /user/{id}
+    defaults: { _controller: MVApiBundle:User:link, _format: ~ }
+    requirements:
+        _method: LINK
+        id: "\d+"
+
+api_user_patch:
+    pattern:  /users/{id}
+    defaults: { _controller: MVApiBundle:User:patch, _format: ~ }
+    requirements:
+        _method: PATCH
+        id: "\d+"

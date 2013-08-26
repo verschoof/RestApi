@@ -1,0 +1,12 @@
+mv_api:
+    resource: "@MVApiBundle/Resources/config/routing.yml"
+    prefix:   /v1
+
+mv_api_annotation:
+    resource: "@MVApiBundle/Controller"
+    type:     annotation
+    prefix:   /v1
+
+NelmioApiDocBundle:
+    resource: "@NelmioApiDocBundle/Resources/config/routing.yml"
+    prefix:   /v1/doc

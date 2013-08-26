@@ -1,0 +1,9 @@
+parameters:
+    mv.api.user:          "MV\\ApiBundle\\Service\\UserService"
+
+services:
+    mv_api.userService:
+        class: %mv.api.user%
+        arguments:
+            doctrine:      "@doctrine.orm.entity_manager"
+            serializer:    "@serializer"
