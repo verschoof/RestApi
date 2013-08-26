@@ -20,3 +20,9 @@ run `composer install`
 run `app/console doctrine:migrations:migrate`
 
 and done!
+
+
+Todo
+=======
+- Fix Serialize
+- Create more example functions
