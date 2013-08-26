@@ -8,26 +8,26 @@ abstract class EntityBaseService
 {
     protected $em;
     protected $repository;
-    protected $repo;
+    protected $entityClass;
 
     public function __construct(EntityManager $em)
     {
         $class = get_class( $this );
         $classExplode = explode( "\\", $class );
 
-        $repository = $classExplode[0] . $classExplode[1] . ':' . end($classExplode);
-        $repository = str_replace('Service', '', $repository);
-        $repo       = $em->getRepository( $repository );
+        $serviceClass = $classExplode[0] . $classExplode[1] . ':' . end($classExplode);
+        $entityClass  = str_replace('Service', '', $serviceClass);
+        $repository   = $em->getRepository($entityClass);
 
-        $this->em         = $em;
-        $this->repository = $repository;
-        $this->repo       = $repo;
+        $this->em          = $em;
+        $this->repository  = $repository;
+        $this->entityClass = $entityClass;
     }
 
-    public function find( $id )
+    public function find($id)
     {
         $findOne = $this->em
-            ->getRepository( $this->repository )
+            ->getRepository($this->entityClass)
             ->find($id);
 
         return $findOne;
@@ -36,7 +36,7 @@ abstract class EntityBaseService
     public function findOneBy( array $criteria )
     {
         $findOne = $this->em
-            ->getRepository( $this->repository )
+            ->getRepository($this->entityClass)
             ->findOneBy( $criteria );
 
         return $findOne;
@@ -45,7 +45,7 @@ abstract class EntityBaseService
     public function findAll()
     {
         $findAll = $this->em
-            ->getRepository( $this->repository )
+            ->getRepository($this->entityClass)
             ->findAll();
 
         return $findAll;
@@ -54,22 +54,17 @@ abstract class EntityBaseService
     public function findBy( array $criteria, array $orderBy = null, $limit = null, $offset = null )
     {
         $findBy = $this->em
-            ->getRepository( $this->repository )
+            ->getRepository($this->entityClass)
             ->findBy($criteria, $orderBy, $limit, $offset);
 
         return $findBy;
     }
 
-    public function newInstance()
+    protected function newInstance()
     {
-        $entityInfo   = $this->em->getClassMetadata( $this->repository );
+        $entityInfo   = $this->em->getClassMetadata($this->entityClass);
         $entityMember = new $entityInfo->name;
 
         return $entityMember;
-    }
-
-    public function repo()
-    {
-        return $this->repo;
     }
 }
