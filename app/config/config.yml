@@ -93,7 +93,3 @@ jms_serializer:
             FOSREST:
                 namespace_prefix: "FOS\\RestBundle"
                 path: "%kernel.root_dir%/Resources/serializer"
-
-            api-bundle:
-                namespace_prefix: "MV\\ApiBundle"
-                path: "@MVApiBundle/Resources/config/serializer"
