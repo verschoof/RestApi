@@ -60,7 +60,7 @@ abstract class EntityBaseService
         return $findBy;
     }
 
-    protected function newInstance()
+    public function newInstance()
     {
         $entityInfo   = $this->em->getClassMetadata($this->entityClass);
         $entityMember = new $entityInfo->name;

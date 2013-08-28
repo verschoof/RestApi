@@ -75,109 +75,18 @@ class UserController extends Controller
      *           "Returned when there is a error"
      *         }
      *     },
-     *  filters={
-     *      {"name"="test"}
-     *  },
-     *  input={
-     *      {"parameters"="array"}
-     *  }
+     *  input="MV\ApiBundle\Form\Type\UserType",
+     *  output="MV\ApiBundle\Entity\User"
      * )
-     *
-     * @param array $parameters An array with parameters to create the user
      *
      * @Rest\View
      */
-    public function newAction($parameters)
+    public function newAction()
     {
         $userService = $this->get('mv_api.userService');
         $user        = $userService->newInstance();
 
-        $result = $this->processForm($user);
-
-        return $result;
-    }
-
-    public function editAction(User $user)
-    {
         return $this->processForm($user);
-    }
-
-    /**
-     * @Rest\View(statusCode=204)
-     */
-    public function removeAction(User $user)
-    {
-        $user->delete();
-    }
-
-    public function getFriendsAction(User $user)
-    {
-        return array('friends' => $user->getFriends());
-    }
-
-    /**
-     * @Rest\View(statusCode=204)
-     */
-    public function linkAction(User $user, Request $request)
-    {
-        if (!$request->attributes->has('links')) {
-            throw new HttpException(400);
-        }
-
-        foreach ($request->attributes->get('links') as $u) {
-            if (!$u instanceof User) {
-                throw new NotFoundHttpException('Invalid resource');
-            }
-
-            if ($user->hasFriend($u)) {
-                throw new HttpException(409, 'Users are already friends');
-            }
-
-            $user->addFriend($u);
-        }
-
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($user);
-        $em->flush();
-    }
-
-    public function patchAction(User $user, Request $request)
-    {
-        $parameters = array();
-        foreach ($request->request->all() as $k => $v) {
-            // whitelist
-            if (in_array($k, array('email'))) {
-                $parameters[$k] = $v;
-            }
-        }
-
-        if (0 === count($parameters)) {
-            return View::create(
-                array('errors' => array('Invalid parameters.')), 400
-            );
-        }
-
-        $user->fromArray($parameters);
-        $errors = $this->get('validator')->validate($user);
-
-        if (0 < count($errors)) {
-            return View::create(array('errors' => $errors), 400);
-        }
-
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($user);
-        $em->flush();
-
-        $response = new Response();
-        $response->setStatusCode(204);
-        $response->headers->set('Location',
-            $this->generateUrl(
-                'acme_demo_user_get', array('id' => $user->getId()),
-                true // absolute
-            )
-        );
-
-        return $response;
     }
 
     protected function processForm(User $user)
@@ -197,13 +106,11 @@ class UserController extends Controller
 
             // set the `Location` header only when creating new resources
             if (201 === $statusCode) {
-                $response->headers->set('Location',
-                    $this->generateUrl(
-                        'api_user_get',
-                        array('id' => $user->getId()),
-                        true // absolute
-                    )
-                );
+                $response->headers->set('Location', $this->generateUrl(
+                    'api_user_get',
+                    array('id' => $user->getId()),
+                    true // absolute
+                ));
             }
 
             return $response;

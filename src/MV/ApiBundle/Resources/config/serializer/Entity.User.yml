@@ -9,3 +9,5 @@ MV\ApiBundle\Entity\User:
             expose: true
         lastname:
             expose: true
+        email:
+            expose: true
