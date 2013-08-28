@@ -5,5 +5,7 @@ MV\ApiBundle\Entity\User:
             expose: true
         firstname:
             expose: true
+        middlename:
+            expose: true
         lastname:
             expose: true

@@ -8,7 +8,6 @@ services:
         class: %mv.api.userService%
         arguments:
             doctrine:      "@doctrine.orm.entity_manager"
-            serializer:    "@serializer"
     mv_api.authorService:
         class: %mv.api.authorService%
         arguments:
