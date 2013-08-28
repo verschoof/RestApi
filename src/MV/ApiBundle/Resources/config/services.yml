@@ -1,9 +1,19 @@
 parameters:
-    mv.api.user:          "MV\\ApiBundle\\Service\\UserService"
+    mv.api.userService:   "MV\\ApiBundle\\Service\\UserService"
+    mv.api.authorService: "MV\\ApiBundle\\Service\\AuthorService"
+    mv.api.movieService:  "MV\\ApiBundle\\Service\\MovieService"
 
 services:
     mv_api.userService:
-        class: %mv.api.user%
+        class: %mv.api.userService%
         arguments:
             doctrine:      "@doctrine.orm.entity_manager"
             serializer:    "@serializer"
+    mv_api.authorService:
+        class: %mv.api.authorService%
+        arguments:
+            doctrine:      "@doctrine.orm.entity_manager"
+    mv_api.movieService:
+        class: %mv.api.movieService%
+        arguments:
+            doctrine:      "@doctrine.orm.entity_manager"

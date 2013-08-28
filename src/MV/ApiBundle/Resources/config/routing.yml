@@ -50,3 +50,30 @@ api_user_patch:
     requirements:
         _method: PATCH
         id: "\d+"
+
+
+api_author_all:
+    pattern:  /authors
+    defaults: { _controller: MVApiBundle:Author:all, _format: ~ }
+    requirements:
+        _method: GET
+
+api_author_get:
+    pattern:  /author/{id}
+    defaults: { _controller: MVApiBundle:Author:get, _format: ~ }
+    requirements:
+        _method: GET
+        id: "\d+"
+
+api_movie_all:
+    pattern:  /movies
+    defaults: { _controller: MVApiBundle:Movie:all, _format: ~ }
+    requirements:
+        _method: GET
+
+api_movie_get:
+    pattern:  /movie/{id}
+    defaults: { _controller: MVApiBundle:Movie:get, _format: ~ }
+    requirements:
+        _method: GET
+        id: "\d+"

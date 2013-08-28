@@ -7,10 +7,10 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints as DoctrineAssert;
 
 /**
- * @ORM\Table(name="user")
+ * @ORM\Table(name="author")
  * @ORM\Entity()
  */
-class User
+class Author
 {
     /**
      * @ORM\Column(type="integer")
@@ -39,23 +39,16 @@ class User
     protected $lastname;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     * @Assert\NotBlank()
-     * @Assert\Email()
+     * @ORM\ManyToMany(targetEntity="Movie", inversedBy="authors")
      */
-    protected $email;
-
-    /**
-     * @ORM\ManyToMany(targetEntity="Movie", inversedBy="watchedBy")
-     */
-    protected $watchedMovies;
+    protected $playedInMovies;
 
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->watchedMovies = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->playedInMovies = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -72,7 +65,7 @@ class User
      * Set firstname
      *
      * @param string $firstname
-     * @return User
+     * @return Author
      */
     public function setFirstname($firstname)
     {
@@ -95,7 +88,7 @@ class User
      * Set middlename
      *
      * @param string $middlename
-     * @return User
+     * @return Author
      */
     public function setMiddlename($middlename)
     {
@@ -118,7 +111,7 @@ class User
      * Set lastname
      *
      * @param string $lastname
-     * @return User
+     * @return Author
      */
     public function setLastname($lastname)
     {
@@ -138,58 +131,35 @@ class User
     }
 
     /**
-     * Set email
+     * Add playedInMovies
      *
-     * @param string $email
-     * @return User
+     * @param \MV\ApiBundle\Entity\Movie $playedInMovies
+     * @return Author
      */
-    public function setEmail($email)
+    public function addPlayedInMovie(\MV\ApiBundle\Entity\Movie $playedInMovies)
     {
-        $this->email = $email;
+        $this->playedInMovies[] = $playedInMovies;
 
         return $this;
     }
 
     /**
-     * Get email
+     * Remove playedInMovies
      *
-     * @return string
+     * @param \MV\ApiBundle\Entity\Movie $playedInMovies
      */
-    public function getEmail()
+    public function removePlayedInMovie(\MV\ApiBundle\Entity\Movie $playedInMovies)
     {
-        return $this->email;
+        $this->playedInMovies->removeElement($playedInMovies);
     }
 
     /**
-     * Add watchedMovies
-     *
-     * @param \MV\ApiBundle\Entity\Movie $watchedMovies
-     * @return User
-     */
-    public function addWatchedMovie(\MV\ApiBundle\Entity\Movie $watchedMovies)
-    {
-        $this->watchedMovies[] = $watchedMovies;
-
-        return $this;
-    }
-
-    /**
-     * Remove watchedMovies
-     *
-     * @param \MV\ApiBundle\Entity\Movie $watchedMovies
-     */
-    public function removeWatchedMovie(\MV\ApiBundle\Entity\Movie $watchedMovies)
-    {
-        $this->watchedMovies->removeElement($watchedMovies);
-    }
-
-    /**
-     * Get watchedMovies
+     * Get playedInMovies
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getWatchedMovies()
+    public function getPlayedInMovies()
     {
-        return $this->watchedMovies;
+        return $this->playedInMovies;
     }
 }
