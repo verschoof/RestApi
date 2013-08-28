@@ -24,5 +24,4 @@ and done!
 
 Todo
 =======
-- Fix Serialize
 - Create more example functions
