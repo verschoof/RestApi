@@ -4,6 +4,7 @@ namespace MV\ApiBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Lsw\ApiCallerBundle\Call\HttpGetJson;
+use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\View\View;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -14,12 +15,17 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use MV\ApiBundle\Form\Type;
 use MV\ApiBundle\Entity\User;
 
-class UserController extends Controller
+class UserController extends FOSRestController
 {
     /**
      * Get a list of all the users
      *
-     * @ApiDoc()
+     * @ApiDoc(
+     *  statusCodes={
+     *         200="Returned when successful",
+     *         403="Returned when the user is not authorized to get the user list",
+     *     }
+     * )
      *
      * @Rest\View
      */
@@ -43,7 +49,8 @@ class UserController extends Controller
      *         404={
      *           "Returned when the user is not found"
      *         }
-     *     }
+     *     },
+     *  output="MV\ApiBundle\Entity\User"
      * )
      *
      * @param integer $id The unique user id
@@ -61,6 +68,37 @@ class UserController extends Controller
 
         return array(
             'user' => $user
+        );
+    }
+
+    /**
+     * Get an array of wachted movies of the user
+     *
+     * @ApiDoc(
+     *  statusCodes={
+     *         200="Returned when successful",
+     *         403="Returned when the user is not authorized to get this user",
+     *         404={
+     *           "Returned when the user is not found"
+     *         }
+     *     }
+     * )
+     *
+     * @param integer $id The unique user id
+     *
+     * @Rest\View
+     */
+    public function getMoviesAction($id)
+    {
+        $userService = $this->get('mv_api.userService');
+        $user        = $userService->find($id);
+
+        if (!$user) {
+            throw new NotFoundHttpException('User not found');
+        }
+
+        return array(
+            'user' => $user->getWatchedMovies()
         );
     }
 
@@ -106,11 +144,7 @@ class UserController extends Controller
 
             // set the `Location` header only when creating new resources
             if (201 === $statusCode) {
-                $response->headers->set('Location', $this->generateUrl(
-                    'api_user_get',
-                    array('id' => $user->getId()),
-                    true // absolute
-                ));
+                $response->headers->set('Location', $this->generateUrl('api_user_get', array('id' => $user->getId()), true));
             }
 
             return $response;

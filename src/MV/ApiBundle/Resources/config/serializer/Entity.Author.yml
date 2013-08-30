@@ -1,0 +1,11 @@
+MV\ApiBundle\Entity\Author:
+    exclusion_policy: ALL
+    properties:
+        id:
+            expose: true
+        firstname:
+            expose: true
+        middlename:
+            expose: true
+        lastname:
+            expose: true

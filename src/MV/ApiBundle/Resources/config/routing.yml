@@ -11,6 +11,13 @@ api_user_get:
         _method: GET
         id: "\d+"
 
+api_user_get_movies:
+    pattern:  /user/{id}/movies
+    defaults: { _controller: MVApiBundle:User:getMovies, _format: ~ }
+    requirements:
+        _method: GET
+        id: "\d+"
+
 api_user_new:
     pattern:  /user/new
     defaults: { _controller: MVApiBundle:User:new, _format: ~ }
@@ -28,13 +35,6 @@ api_user_delete:
     defaults: { _controller: MVApiBundle:User:remove, _format: ~ }
     requirements:
         _method: DELETE
-        id: "\d+"
-
-api_user_get_friends:
-    pattern:  /user/{id}/friends
-    defaults: { _controller: MVApiBundle:User:getFriends, _format: ~ }
-    requirements:
-        _method: GET
         id: "\d+"
 
 acme_demo_user_link:
@@ -65,6 +65,14 @@ api_author_get:
         _method: GET
         id: "\d+"
 
+api_author_get_movies:
+    pattern:  /author/{id}/movies
+    defaults: { _controller: MVApiBundle:Author:getMovies, _format: ~ }
+    requirements:
+        _method: GET
+        id: "\d+"
+
+
 api_movie_all:
     pattern:  /movies
     defaults: { _controller: MVApiBundle:Movie:all, _format: ~ }
@@ -74,6 +82,20 @@ api_movie_all:
 api_movie_get:
     pattern:  /movie/{id}
     defaults: { _controller: MVApiBundle:Movie:get, _format: ~ }
+    requirements:
+        _method: GET
+        id: "\d+"
+
+api_movie_get_author:
+    pattern:  /movie/{id}/authors
+    defaults: { _controller: MVApiBundle:Movie:getAuthors, _format: ~ }
+    requirements:
+        _method: GET
+        id: "\d+"
+
+api_movie_get_watchers:
+    pattern:  /movie/{id}/watchers
+    defaults: { _controller: MVApiBundle:Movie:getWatchers, _format: ~ }
     requirements:
         _method: GET
         id: "\d+"

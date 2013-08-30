@@ -36,11 +36,12 @@ class AuthorController extends Controller
      * @ApiDoc(
      *  statusCodes={
      *         200="Returned when successful",
-     *         403="Returned when the author is not authorized to get this author",
+     *         403="Returned when the user is not authorized to get this author",
      *         404={
      *           "Returned when the author is not found"
      *         }
-     *     }
+     *     },
+     *  output="MV\ApiBundle\Entity\Author"
      * )
      *
      * @param integer $id The unique author id
@@ -58,6 +59,37 @@ class AuthorController extends Controller
 
         return array(
             'author' => $author
+        );
+    }
+
+    /**
+     * Get an array of movies that the author played in
+     *
+     * @ApiDoc(
+     *  statusCodes={
+     *         200="Returned when successful",
+     *         403="Returned when the user is not authorized to get this author",
+     *         404={
+     *           "Returned when the author is not found"
+     *         }
+     *     }
+     * )
+     *
+     * @param integer $id The unique author id
+     *
+     * @Rest\View
+     */
+    public function getMoviesAction($id)
+    {
+        $authorService = $this->get('mv_api.authorService');
+        $author        = $authorService->find($id);
+
+        if (!$author) {
+            throw new NotFoundHttpException('author not found');
+        }
+
+        return array(
+            'movies' => $author->getPlayedInMovies()
         );
     }
 }

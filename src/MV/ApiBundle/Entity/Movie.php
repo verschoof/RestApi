@@ -135,4 +135,37 @@ class Movie
     {
         return $this->authors;
     }
+
+    /**
+     * Add watchedBy
+     *
+     * @param \MV\ApiBundle\Entity\User $watchedBy
+     * @return Movie
+     */
+    public function addWatchedBy(\MV\ApiBundle\Entity\User $watchedBy)
+    {
+        $this->watchedBy[] = $watchedBy;
+    
+        return $this;
+    }
+
+    /**
+     * Remove watchedBy
+     *
+     * @param \MV\ApiBundle\Entity\User $watchedBy
+     */
+    public function removeWatchedBy(\MV\ApiBundle\Entity\User $watchedBy)
+    {
+        $this->watchedBy->removeElement($watchedBy);
+    }
+
+    /**
+     * Get watchedBy
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getWatchedBy()
+    {
+        return $this->watchedBy;
+    }
 }
