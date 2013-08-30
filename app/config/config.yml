@@ -68,14 +68,19 @@ sensio_framework_extra:
         annotations: false
 
 fos_rest:
+    access_denied_listener:
+        html: true
+        twig: true
     param_fetcher_listener: true
     body_listener: true
-    format_listener: true
+    format_listener:
+        fallback_format: json
     view:
         view_response_listener: 'force'
         templating_formats:
             html: false
             twig: false
+        default_engine: json
     routing_loader:
         default_format: json
 

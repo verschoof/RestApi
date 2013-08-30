@@ -28,7 +28,7 @@ class User
     protected $firstname;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     protected $middlename;
 
@@ -162,26 +162,34 @@ class User
     }
 
     /**
-     * Add watchedMovies
+     * Has watchedMovie
+     */
+    public function hasWachtedMovie(\MV\ApiBundle\Entity\Movie $watchedMovie)
+    {
+        return $this->watchedMovies->contains($watchedMovie);
+    }
+
+    /**
+     * Add watchedMovie
      *
-     * @param \MV\ApiBundle\Entity\Movie $watchedMovies
+     * @param \MV\ApiBundle\Entity\Movie $watchedMovie
      * @return User
      */
-    public function addWatchedMovie(\MV\ApiBundle\Entity\Movie $watchedMovies)
+    public function addWatchedMovie(\MV\ApiBundle\Entity\Movie $watchedMovie)
     {
-        $this->watchedMovies[] = $watchedMovies;
+        $this->watchedMovies[] = $watchedMovie;
 
         return $this;
     }
 
     /**
-     * Remove watchedMovies
+     * Remove watchedMovie
      *
-     * @param \MV\ApiBundle\Entity\Movie $watchedMovies
+     * @param \MV\ApiBundle\Entity\Movie $watchedMovie
      */
-    public function removeWatchedMovie(\MV\ApiBundle\Entity\Movie $watchedMovies)
+    public function removeWatchedMovie(\MV\ApiBundle\Entity\Movie $watchedMovie)
     {
-        $this->watchedMovies->removeElement($watchedMovies);
+        $this->watchedMovies->removeElement($watchedMovie);
     }
 
     /**
