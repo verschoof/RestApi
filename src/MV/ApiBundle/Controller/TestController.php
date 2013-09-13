@@ -12,7 +12,7 @@ class TestController extends Controller
      */
     public function indexAction()
     {
-        $url = 'http://api.loc/v1/users?_format=json';
+        $url = 'http://localhost/v1/users?_format=json';
 
         // create a new cURL resource
         $ch = curl_init();
