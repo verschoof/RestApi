@@ -115,6 +115,28 @@ class UserController extends FOSRestController
     }
 
     /**
+     * Edit a user
+     *
+     * @ApiDoc(
+     *  statusCodes={
+     *         200="Returned when successful",
+     *         403="Returned when the user is not authorized to create a new user",
+     *         404={
+     *           "Returned when there is a error"
+     *         }
+     *     },
+     *  input="MV\ApiBundle\Form\Type\UserType",
+     *  output="MV\ApiBundle\Entity\User"
+     * )
+     *
+     * @Rest\View
+     */
+    public function editAction(User $user)
+    {
+        return $this->processForm($user);
+    }
+
+    /**
      * Delete a user by unique id
      *
      * @ApiDoc(
@@ -148,6 +170,8 @@ class UserController extends FOSRestController
      */
     public function linkAction(User $user, Request $request)
     {
+        var_dump('test');
+        exit;
         if (!$request->attributes->has('links')) {
             throw new HttpException(400);
         }
