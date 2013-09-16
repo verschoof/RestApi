@@ -19,6 +19,9 @@ Edit app/config/parameters_dev.yml to your settings
 run `composer install`
 run `app/console doctrine:migrations:migrate`
 
+Ensure that mod_rewrite is enabled if you are running Apache and that DocumentRoot is the */rest-api/web path.
+Navigate to http://localhost/app_dev.php/v1/test
+
 and done!
 
 
